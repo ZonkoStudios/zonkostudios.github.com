@@ -23,13 +23,17 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
         }
 
-        /* --- Header & Navigation --- */
+        /* --- Header --- */
         header {
             display: flex;
             justify-content: space-between;
@@ -106,8 +110,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 60px 5%;
-            min-height: 50vh;
+            padding: 40px 5%;
+            min-height: 40vh;
             background: radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
         }
 
@@ -116,7 +120,7 @@
         }
 
         .hero-content h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             line-height: 1.1;
             margin-bottom: 20px;
         }
@@ -128,8 +132,7 @@
         .hero-content p {
             color: var(--text-muted);
             font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -151,33 +154,108 @@
             box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
         }
 
-        .hero-mascot-art {
-            width: 320px;
-            height: 320px;
-            background-color: var(--bg-card);
-            border: 2px dashed var(--primary-green);
-            border-radius: 20px;
+        /* --- NEW: CRAZYGAMES THEATER VIEW CONTAINER --- */
+        .arcade-theater {
+            max-width: 900px;
+            margin: 20px auto 50px auto;
+            padding: 0 20px;
+            display: none; /* Hidden by default until a game is selected */
+        }
+
+        /* The Box representing the actual running game screen */
+        .theater-screen-wrapper {
+            background-color: #050806;
+            border: 3px solid var(--primary-green);
+            border-radius: 12px;
+            position: relative;
+            width: 100%;
+            height: 480px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.15);
         }
 
-        .mascot-placeholder-icon {
-            font-size: 5rem;
+        /* Fullscreen Support Target */
+        .theater-screen-wrapper:fullscreen {
+            height: 100vh;
+            width: 100vw;
+            border: none;
+            border-radius: 0;
+        }
+
+        .theater-iframe-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Control Bar below game window */
+        .theater-controls {
+            background-color: var(--bg-card);
+            padding: 15px 20px;
+            border-radius: 0 0 12px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #1f2e26;
+            border-top: none;
+        }
+
+        .fullscreen-btn {
+            background: #1a2620;
+            border: 1px solid var(--primary-green);
+            color: var(--primary-green);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--primary-green);
+            color: #000;
+        }
+
+        /* CrazyGames Style Metadata Box Below Game */
+        .game-meta-box {
+            background-color: var(--bg-card);
+            margin-top: 15px;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #1f2e26;
+        }
+
+        .meta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 15px;
-            animation: bounce 2s infinite alternate;
         }
 
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
+        .rating-stars {
+            color: #ffd700; /* Gold Stars */
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* --- Content Grid & Interactive Games --- */
+        .rating-value {
+            color: var(--text-main);
+            font-weight: bold;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* --- Content Grids --- */
         .main-container {
             padding: 40px 5%;
         }
@@ -192,39 +270,70 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 60px;
         }
 
+        /* Clickable Thumbnail Cards */
         .card {
             background-color: var(--bg-card);
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #1f2e26;
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
-        .game-window {
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-green);
+            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.1);
+        }
+
+        .card-thumb {
             width: 100%;
-            height: 240px;
+            height: 180px;
             background-color: #050806;
-            position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            font-size: 3rem;
             border-bottom: 1px solid #1f2e26;
-            overflow: hidden;
+            position: relative;
+        }
+
+        .play-hover-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(57, 255, 20, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .card:hover .play-hover-overlay {
+            opacity: 1;
+        }
+
+        .play-hover-overlay span {
+            background: var(--primary-green);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
 
         .card-info {
             padding: 20px;
             flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         .card-tag {
@@ -236,7 +345,6 @@
             border-radius: 4px;
             display: inline-block;
             margin-bottom: 10px;
-            width: max-content;
         }
 
         .card-info h3 {
@@ -248,444 +356,372 @@
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.4;
-            margin-bottom: 15px;
         }
 
-        /* --- Custom Game Mechanics CSS --- */
-        /* Game 1: Arcade Canvas */
-        canvas {
-            background-color: #080d0a;
-            display: block;
-        }
-        .game-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 15, 13, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
+        /* --- Game Internal Engines Styling (Loaded inside main view) --- */
+        canvas { background-color: #080d0a; display: block; }
+        .inner-game-element { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .time-rift { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--accent-green), transparent); box-shadow: 0 0 25px var(--primary-green); cursor: pointer; animation: pulse 1s infinite alternate; }
+        @keyframes pulse { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
+        .frozen { background: radial-gradient(circle, #00ffff, transparent) !important; box-shadow: 0 0 25px #00ffff !important; }
+        .battle-screen { display: flex; justify-content: space-around; width: 80%; margin-bottom: 20px; }
+        .hud-bar { width: 120px; height: 10px; background-color: #333; border-radius: 5px; margin-top: 5px; }
+        .hud-fill { height: 100%; background-color: var(--primary-green); width: 100%; transition: width 0.3s ease; }
+        .mini-btn { background-color: #1a2620; color: var(--primary-green); border: 1px solid var(--primary-green); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 5px; }
+        .mini-btn:hover { background-color: var(--primary-green); color: #000; }
 
-        /* Game 2: Chrono Bound */
-        .time-rift {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-green), transparent);
-            box-shadow: 0 0 20px var(--primary-green);
-            cursor: pointer;
-            animation: pulse 1s infinite alternate;
-        }
-        @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.8; }
-            100% { transform: scale(1.1); opacity: 1; }
-        }
-        .frozen {
-            animation-play-state: paused !important;
-            box-shadow: 0 0 20px #00ffff !important;
-            background: radial-gradient(circle, #00ffff, transparent) !important;
-        }
-
-        /* Game 3: Strategy Simulation */
-        .battle-screen {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            padding: 10px;
-            font-size: 0.9rem;
-        }
-        .hud-bar {
-            width: 80px;
-            height: 8px;
-            background-color: #333;
-            border-radius: 4px;
-            margin-top: 5px;
-        }
-        .hud-fill {
-            height: 100%;
-            background-color: var(--primary-green);
-            width: 100%;
-            transition: width 0.3s ease;
-        }
-
-        .mini-btn {
-            background-color: #1a2620;
-            color: var(--primary-green);
-            border: 1px solid var(--primary-green);
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-        .mini-btn:hover {
-            background-color: var(--primary-green);
-            color: #000;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: #060a08;
-            padding: 40px 5%;
-            text-align: center;
-            border-top: 1px solid #1f2e26;
-            color: var(--text-muted);
-        }
-        footer p span {
-            color: var(--primary-green);
-        }
+        footer { background-color: #060a08; padding: 40px 5%; text-align: center; border-top: 1px solid #1f2e26; color: var(--text-muted); margin-top: 40px;}
+        footer p span { color: var(--primary-green); }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-area">
-            <div class="mascot-head">
-               <span style="font-size: 1.2rem; z-index: 10;">🦝</span>
-            </div>
+            <div class="mascot-head"><span style="font-size: 1.2rem; z-index: 10;">🦝</span></div>
             <div class="logo-text">Zonko<span>.</span></div>
         </div>
         <nav>
             <ul>
                 <li><a href="#" class="active">Home</a></li>
-                <li><a href="#games-section">Play Games</a></li>
+                <li><a href="#games-section">Arcade</a></li>
                 <li><a href="#anime-section">Anime</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="home-hero">
         <div class="hero-content">
-            <h1>Your Portal To <span>Games</span> & <span>Anime</span></h1>
-            <p>Welcome to Zonko! Scroll down to play our custom mini-games instantly or browse the latest hot anime adaptations.</p>
-            <a href="#games-section" class="btn">Play Arcade Now</a>
+            <h1>Zonko <span>Arcade</span> Platform</h1>
+            <p>Click any game below to open the custom play dashboard directly on this page—complete with dynamic ratings and absolute fullscreen mode support.</p>
+            <a href="#games-section" class="btn">Browse Game Grid</a>
+        </div>
+        <div style="font-size: 6rem;">🦝💚</div>
+    </section>
+
+    <section class="arcade-theater" id="game-theater-section">
+        <div class="theater-screen-wrapper" id="fullscreen-target">
+            <div class="theater-iframe-container" id="active-game-window"></div>
         </div>
         
-        <div class="hero-mascot-art">
-            <div class="mascot-placeholder-icon">🦝💚</div>
-            <h3>Meet Zonko!</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; padding: 0 10px;">
-                Our iconic raccoon mascot rocking his favorite neon green hoodie.
-            </p>
+        <div class="theater-controls">
+            <div style="font-weight: bold; color: var(--primary-green);" id="theater-mini-title">GAME ACTIVE</div>
+            <button class="fullscreen-btn" onclick="goFullScreen()">
+                📺 Go Full Screen
+            </button>
+        </div>
+
+        <div class="game-meta-box">
+            <div class="meta-header">
+                <div>
+                    <h2 id="meta-game-title" style="font-size: 1.8rem; margin-bottom: 5px;">Game Title</h2>
+                    <span class="card-tag" id="meta-game-genre">Genre</span>
+                </div>
+                <div class="rating-stars">
+                    <span>★ ★ ★ ★ ☆</span>
+                    <span class="rating-value" id="meta-game-rating">4.7</span>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #1f2e26; margin: 15px 0;">
+            <p id="meta-game-desc" style="color: var(--text-muted); line-height: 1.6;">Game description details will parse dynamically inside this container viewport.</p>
         </div>
     </section>
 
     <main class="main-container">
-
-        <h2 class="section-title" id="games-section">Playable Arcade Games</h2>
+        <h2 class="section-title" id="games-section">Select a Game to Play</h2>
+        
         <div class="grid">
-            
-            <div class="card">
-                <div class="game-window" id="g1-container">
-                    <canvas id="canvasQuest" width="340" height="240"></canvas>
-                    <div class="game-overlay" id="g1-overlay">
-                        <p style="font-weight: bold; color: var(--primary-green);">CYBER RACCOON QUEST</p>
-                        <p style="font-size: 0.8rem; text-align: center; color: var(--text-muted);">Use Left / Right arrow keys to move.<br>Collect Green logs, avoid Red firewalls.</p>
-                        <button class="mini-btn" onclick="startGame1()">Start Mission</button>
-                    </div>
-                    <div style="position: absolute; top: 10px; right: 10px; font-weight: bold; display:none;" id="g1-score-ui">Score: <span id="g1-score">0</span></div>
+            <div class="card" onclick="loadGame('quest')">
+                <div class="card-thumb">
+                    🦝
+                    <div class="play-hover-overlay"><span>Launch Game</span></div>
                 </div>
                 <div class="card-info">
-                    <div>
-                        <span class="card-tag">Arcade / Interactive</span>
-                        <h3>Cyber Raccoon Quest</h3>
-                        <p>Navigate the grid as Zonko. Dodge system errors and harvest clean data nodes.</p>
-                    </div>
+                    <span class="card-tag">Arcade</span>
+                    <h3>Cyber Raccoon Quest</h3>
+                    <p>Dodge hazardous system firewalls and collect pure neon data modules.</p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="game-window">
-                    <div class="time-rift" id="rift-target" onclick="clickRift()"></div>
-                    <div style="margin-top: 15px; font-size: 0.9rem;">Time Fractures: <span id="g2-score" style="color: var(--primary-green); font-weight:bold;">0</span></div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;" id="g2-status">Status: Temporal Flux Active</div>
-                    <button class="mini-btn" id="g2-freeze-btn" onclick="toggleTime()">Freeze Time</button>
+            <div class="card" onclick="loadGame('chrono')">
+                <div class="card-thumb">
+                    🌀
+                    <div class="play-hover-overlay"><span>Launch Game</span></div>
                 </div>
                 <div class="card-info">
-                    <div>
-                        <span class="card-tag">Clicker / Reflex</span>
-                        <h3>Chrono Bound</h3>
-                        <p>Click the shifting reality rift to harvest energy. Freeze time when the paradox grows unstable!</p>
-                    </div>
+                    <span class="card-tag">Reflex / Clicker</span>
+                    <h3>Chrono Bound</h3>
+                    <p>Manipulate space-time rifts. Freeze your surroundings to stabilize energy flow.</p>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="game-window" style="padding: 15px;">
-                    <div class="battle-screen">
-                        <div style="text-align: center;">
-                            <div>🦝 Zonko (Player)</div>
-                            <div class="hud-bar"><div class="hud-fill" id="p-hp"></div></div>
-                        </div>
-                        <div style="font-weight: bold; align-self: center; color: var(--danger-red);">VS</div>
-                        <div style="text-align: center;">
-                            <div>🤖 Firewall Bot</div>
-                            <div class="hud-bar"><div class="hud-fill" id="e-hp" style="background-color: var(--danger-red);"></div></div>
-                        </div>
-                    </div>
-                    <p id="battle-log" style="font-size: 0.8rem; color: var(--text-muted); margin: 10px 0; height: 35px; text-align: center;">Your turn! Choose an action.</p>
-                    <div style="display: flex; gap: 10px;" id="battle-actions">
-                        <button class="mini-btn" onclick="playTurn('attack')">Neon Slash</button>
-                        <button class="mini-btn" onclick="playTurn('heal')" style="border-color: var(--accent-green); color: var(--accent-green);">Zip Hoodie (Defend)</button>
-                    </div>
-                    <button class="mini-btn" id="reset-b-btn" onclick="resetBattle()" style="display: none; margin-top: 5px;">Battle Again</button>
+            <div class="card" onclick="loadGame('tactics')">
+                <div class="card-thumb">
+                    ⚔️
+                    <div class="play-hover-overlay"><span>Launch Game</span></div>
                 </div>
                 <div class="card-info">
-                    <div>
-                        <span class="card-tag">Turn-Based Strategy</span>
-                        <h3>Hoodie Squad Tactics</h3>
-                        <p>Command the squad. Balance high-energy attacks with defensive tech maneuvers to bypass mainframe guards.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <h2 class="section-title" id="anime-section">Hot Anime Releases</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="game-window" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9));">🎞️ KEY ART PLACEHOLDER</div>
-                <div class="card-info">
-                    <div>
-                        <span class="card-tag">Sci-Fi</span>
-                        <h3>Neon Chronicles: Season 2</h3>
-                        <p>The digital grid faces structural deletion. Can our squad rewrite the core code before midnight?</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="game-window" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9));">🎞️ KEY ART PLACEHOLDER</div>
-                <div class="card-info">
-                    <div>
-                        <span class="card-tag">Fantasy / Comedy</span>
-                        <h3>Is It Wrong to Loot Trash?</h3>
-                        <p>An unconventional fantasy adventure following a legendary raccoon beast-kin building an empire out of mechanical scrap.</p>
-                    </div>
+                    <span class="card-tag">Turn-Based</span>
+                    <h3>Hoodie Squad Tactics</h3>
+                    <p>Engage mainframe bots in structural combat using high-tech skills.</p>
                 </div>
             </div>
         </div>
 
+        <h2 class="section-title" id="anime-section">Hot Anime Streams</h2>
+        <div class="grid">
+            <div class="card" style="cursor: default;">
+                <div class="card-thumb" style="font-size: 1.5rem; color: var(--text-muted);">🎬 NO DATA</div>
+                <div class="card-info">
+                    <span class="card-tag">Sci-Fi</span>
+                    <h3>Neon Chronicles: Season 2</h3>
+                    <p>The system grid undergoes a forced reboot. The team has 24 hours to code a workaround.</p>
+                </div>
+            </div>
+            <div class="card" style="cursor: default;">
+                <div class="card-thumb" style="font-size: 1.5rem; color: var(--text-muted);">🎬 NO DATA</div>
+                <div class="card-info">
+                    <span class="card-tag">Fantasy</span>
+                    <h3>Is It Wrong to Loot Trash?</h3>
+                    <p>A comedy about a clever trash-looting beast-kin who accidentally inherits an entire kingdom.</p>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 <span>Zonko Hub</span>. All Rights Reserved. Stay green, stay wild. 🦝</p>
+        <p>&copy; 2026 <span>Zonko Hub</span>. Stay green, stay wild. 🦝</p>
     </footer>
 
     <script>
-        /* ========================================================
-           GAME 1: CYBER RACCOON QUEST ENGINE
-           ======================================================== */
-        const canvas = document.getElementById('canvasQuest');
-        const ctx = canvas.getContext('2d');
-        let game1Interval, itemInterval;
-        let score1 = 0;
-        let game1Running = false;
-        
-        let player = { x: 155, y: 200, width: 30, height: 30, speed: 15 };
-        let gameObjects = [];
+        // Game Loading Framework Switcher
+        function loadGame(gameKey) {
+            const theater = document.getElementById('game-theater-section');
+            const windowFrame = document.getElementById('active-game-window');
+            
+            // Meta Elements
+            const title = document.getElementById('meta-game-title');
+            const miniTitle = document.getElementById('theater-mini-title');
+            const genre = document.getElementById('meta-game-genre');
+            const rating = document.getElementById('meta-game-rating');
+            const desc = document.getElementById('meta-game-desc');
 
-        // Watch player input
-        window.addEventListener('keydown', (e) => {
-            if(!game1Running) return;
+            // Make the Theater layout visible
+            theater.style.display = 'block';
+
+            // Clear any previously running game script engines completely
+            clearInterval(game1Interval);
+            clearInterval(itemInterval);
+
+            // Populate unique Game UI, Scripts, and Layouts depending on clicked card
+            if (gameKey === 'quest') {
+                title.innerText = "Cyber Raccoon Quest";
+                miniTitle.innerText = "PLAYING: CYBER RACCOON QUEST";
+                genre.innerText = "Arcade Action";
+                rating.innerText = "4.9 / 5";
+                desc.innerText = "Controls: Use Left and Right Arrow keys on your keyboard to slide Zonko across the memory channel. Collect green logs while avoiding the descending firewall blocks.";
+                
+                windowFrame.innerHTML = `
+                    <div style="position: absolute; top: 15px; left: 15px; font-weight: bold; font-size:1.2rem; color: var(--primary-green);">Score: <span id="g1-score">0</span></div>
+                    <canvas id="canvasQuest" width="600" height="400"></canvas>
+                    <div id="g1-overlay" style="position:absolute; background:rgba(0,0,0,0.85); width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+                        <h2 style="color:var(--primary-green); margin-bottom:10px;">READY PLAYER ONE</h2>
+                        <button class="mini-btn" onclick="startGame1()">Start Match</button>
+                    </div>
+                `;
+                initQuestEngine();
+            } 
+            else if (gameKey === 'chrono') {
+                title.innerText = "Chrono Bound";
+                miniTitle.innerText = "PLAYING: CHRONO BOUND";
+                genre.innerText = "Reflex Clicker";
+                rating.innerText = "4.6 / 5";
+                desc.innerText = "Click the anomaly rift directly to build data metrics. Keep an eye out—toggling Freeze Time cools down system instability to allow safe extra extractions.";
+                
+                windowFrame.innerHTML = `
+                    <div class="inner-game-element">
+                        <div style="font-size: 1.2rem; margin-bottom: 10px;">Time Fractures: <span id="g2-score" style="color:var(--primary-green); font-weight:bold;">0</span></div>
+                        <div id="g2-status" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Status: Run-Time Normal</div>
+                        <div class="time-rift" id="rift-target" onclick="clickRift()"></div>
+                        <button class="mini-btn" id="g2-freeze-btn" onclick="toggleTime()" style="margin-top: 30px;">Freeze Reality Framework</button>
+                    </div>
+                `;
+            } 
+            else if (gameKey === 'tactics') {
+                title.innerText = "Hoodie Squad Tactics";
+                miniTitle.innerText = "PLAYING: HOODIE SQUAD TACTICS";
+                genre.innerText = "Turn-Based Strategy";
+                rating.innerText = "4.8 / 5";
+                desc.innerText = "A miniature tactical system environment. Select your approach structure carefully. Use Defend to reduce damage incoming from active system bot defenses.";
+                
+                windowFrame.innerHTML = `
+                    <div class="inner-game-element" style="padding: 20px;">
+                        <div class="battle-screen">
+                            <div style="text-align: center;"><h3>🦝 Player Unit</h3><div class="hud-bar"><div class="hud-fill" id="p-hp"></div></div></div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--danger-red); align-self:center;">VS</div>
+                            <div style="text-align: center;"><h3>🤖 Security Bot</h3><div class="hud-bar"><div class="hud-fill" id="e-hp" style="background-color: var(--danger-red);"></div></div></div>
+                        </div>
+                        <p id="battle-log" style="margin: 20px 0; color: var(--text-muted); font-size:1.1rem;">Awaiting tactical designation initialization...</p>
+                        <div id="battle-actions">
+                            <button class="mini-btn" onclick="playTurn('attack')">Execute Slash</button>
+                            <button class="mini-btn" onclick="playTurn('heal')">Defend Network</button>
+                        </div>
+                        <button class="mini-btn" id="reset-b-btn" onclick="resetBattle()" style="display:none;">Reinitialize Environment</button>
+                    </div>
+                `;
+                resetBattle();
+            }
+
+            // Automatically focus screen focus directly to the viewport game frame smoothly
+            theater.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Full Screen Handler Function
+        function goFullScreen() {
+            const element = document.getElementById('fullscreen-target');
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.webkitRequestFullscreen) { /* Safari */
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) { /* IE11 */
+                element.msRequestFullscreen();
+            }
+        }
+
+        /* ========================================================
+           ENGINE CODE 1: CYBER QUEST CANVASSING
+           ======================================================== */
+        let game1Interval, itemInterval;
+        let score1 = 0, game1Running = false;
+        let player, gameObjects;
+
+        function initQuestEngine() {
+            player = { x: 280, y: 350, width: 40, height: 40, speed: 25 };
+            gameObjects = [];
+            
+            // Clean global hooks to map keys correctly inside parent layout
+            window.removeEventListener('keydown', handleQuestInput);
+            window.addEventListener('keydown', handleQuestInput);
+        }
+
+        function handleQuestInput(e) {
+            const c = document.getElementById('canvasQuest');
+            if(!game1Running || !c) return;
             if(e.key === 'ArrowLeft' && player.x > 0) player.x -= player.speed;
-            if(e.key === 'ArrowRight' && player.x < canvas.width - player.width) player.x += player.speed;
-        });
+            if(e.key === 'ArrowRight' && player.x < c.width - player.width) player.x += player.speed;
+        }
 
         function startGame1() {
+            const c = document.getElementById('canvasQuest');
+            if(!c) return;
             document.getElementById('g1-overlay').style.display = 'none';
-            document.getElementById('g1-score-ui').style.display = 'block';
             score1 = 0;
             document.getElementById('g1-score').innerText = score1;
             gameObjects = [];
-            player.x = 155;
+            player.x = 280;
             game1Running = true;
 
-            // Spawn loop
             itemInterval = setInterval(() => {
                 let isGood = Math.random() > 0.4;
                 gameObjects.push({
-                    x: Math.random() * (canvas.width - 20),
-                    y: -20,
-                    size: 15,
-                    speed: 3 + Math.random() * 4,
-                    type: isGood ? 'data' : 'bug'
+                    x: Math.random() * (c.width - 20),
+                    y: -20, size: 20, speed: 4 + Math.random() * 5, type: isGood ? 'data' : 'bug'
                 });
-            }, 800);
+            }, 600);
 
-            // Frame loop
-            game1Interval = setInterval(updateGame1, 1000/30);
+            game1Interval = setInterval(updateQuestFrame, 1000/30);
         }
 
-        function updateGame1() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function updateQuestFrame() {
+            const c = document.getElementById('canvasQuest');
+            if(!c) return;
+            const ctx = c.getContext('2d');
+            ctx.clearRect(0, 0, c.width, c.height);
 
-            // Draw player (Gray raccoon body with a green hoodie)
-            ctx.fillStyle = '#666'; // Raccoon Base
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-            ctx.fillStyle = '#39ff14'; // Green hoodie trim
-            ctx.fillRect(player.x, player.y + 10, player.width, player.height - 10);
-            ctx.fillStyle = '#fff'; // Mask eyes
-            ctx.fillRect(player.x + 5, player.y + 5, 5, 5);
-            ctx.fillRect(player.x + 20, player.y + 5, 5, 5);
+            // Render Character Layout
+            ctx.fillStyle = '#666'; ctx.fillRect(player.x, player.y, player.width, player.height);
+            ctx.fillStyle = '#39ff14'; ctx.fillRect(player.x, player.y + 15, player.width, player.height - 15);
 
-            // Handle falling items
             for (let i = gameObjects.length - 1; i >= 0; i--) {
-                let o = gameObjects[i];
-                o.y += o.speed;
-
-                // Draw item
+                let o = gameObjects[i]; o.y += o.speed;
                 ctx.fillStyle = o.type === 'data' ? '#39ff14' : '#ff3333';
                 ctx.fillRect(o.x, o.y, o.size, o.size);
 
-                // Collision detection
                 if (o.y + o.size >= player.y && o.x + o.size >= player.x && o.x <= player.x + player.width && o.y <= player.y + player.height) {
                     if (o.type === 'data') {
-                        score1 += 10;
-                        document.getElementById('g1-score').innerText = score1;
+                        score1 += 10; document.getElementById('g1-score').innerText = score1;
                     } else {
-                        endGame1();
+                        game1Running = false; clearInterval(game1Interval); clearInterval(itemInterval);
+                        document.getElementById('g1-overlay').style.display = 'flex';
+                        document.getElementById('g1-overlay').innerHTML = `<h3 style="color:var(--danger-red);">MAINBOARD CRASHED</h3><p style="margin:5px 0;">Final Log Units: ${score1}</p><button class="mini-btn" onclick="startGame1()">Retry Run</button>`;
                     }
-                    gameObjects.splice(i, 1);
-                    continue;
+                    gameObjects.splice(i, 1); continue;
                 }
-
-                // Cleanup out of bounds
-                if (o.y > canvas.height) {
-                    gameObjects.splice(i, 1);
-                }
+                if (o.y > c.height) gameObjects.splice(i, 1);
             }
-        }
-
-        function endGame1() {
-            game1Running = false;
-            clearInterval(game1Interval);
-            clearInterval(itemInterval);
-            document.getElementById('g1-overlay').style.display = 'flex';
-            document.getElementById('g1-overlay').innerHTML = `
-                <p style="color:var(--danger-red); font-weight:bold;">FIREWALL CRASHED YOU</p>
-                <p>Final Score: ${score1}</p>
-                <button class="mini-btn" onclick="startGame1()">Retry Run</button>
-            `;
         }
 
         /* ========================================================
-           GAME 2: CHRONO BOUND ENGINE
+           ENGINE CODE 2: CHRONO BOUND MANAGEMENT
            ======================================================== */
-        let score2 = 0;
-        let isTimeFrozen = false;
-        let anomalyGrowth = null;
-
+        let score2 = 0, isTimeFrozen = false;
         function clickRift() {
-            if(isTimeFrozen) {
-                score2 += 1;
-            } else {
-                score2 += 5; // Higher rewards when runtime is unstable
-            }
+            score2 += isTimeFrozen ? 1 : 5;
             document.getElementById('g2-score').innerText = score2;
-            
-            // Relocate rift randomly inside container boundary mockingly
-            const rift = document.getElementById('rift-target');
             if(!isTimeFrozen) {
-                let rx = Math.floor(Math.random() * 60) - 30;
-                let ry = Math.floor(Math.random() * 40) - 20;
-                rift.style.transform = `translate(${rx}px, ${ry}px)`;
+                const rift = document.getElementById('rift-target');
+                rift.style.transform = `translate(${Math.floor(Math.random()*160)-80}px, ${Math.floor(Math.random()*80)-40}px)`;
             }
         }
-
         function toggleTime() {
+            isTimeFrozen = !isTimeFrozen;
             const rift = document.getElementById('rift-target');
             const btn = document.getElementById('g2-freeze-btn');
             const status = document.getElementById('g2-status');
-
-            isTimeFrozen = !isTimeFrozen;
-
             if(isTimeFrozen) {
-                rift.classList.add('frozen');
-                btn.innerText = "Resume Flow";
-                status.innerText = "Status: Paradox Fixed (Safe Click)";
-                status.style.color = "#00ffff";
+                rift.classList.add('frozen'); rift.style.transform = "translate(0px,0px)";
+                btn.innerText = "Release Flow Restraints"; status.innerText = "Status: Static Array Safe Zone"; status.style.color = "#00ffff";
             } else {
-                rift.classList.remove('frozen');
-                btn.innerText = "Freeze Time";
-                status.innerText = "Status: Temporal Flux Active";
-                status.style.color = "var(--text-muted)";
-                rift.style.transform = `translate(0px, 0px)`;
+                rift.classList.remove('frozen'); btn.innerText = "Freeze Reality Framework"; status.innerText = "Status: Run-Time Normal"; status.style.color = "var(--text-muted)";
             }
         }
 
         /* ========================================================
-           GAME 3: HOODIE SQUAD TACTICS ENGINE
+           ENGINE CODE 3: HOODIE SQUAD STRATEGY SIMULATION
            ======================================================== */
-        let playerHP = 100;
-        let enemyHP = 100;
-
+        let playerHP = 100, enemyHP = 100;
         function playTurn(action) {
             if(playerHP <= 0 || enemyHP <= 0) return;
-
             let log = document.getElementById('battle-log');
-
             if(action === 'attack') {
-                let damage = Math.floor(Math.random() * 15) + 10;
-                enemyHP -= damage;
-                log.innerText = `Zonko strikes with Neon Slash dealing ${damage} DMG!`;
-            } else if(action === 'heal') {
-                let heal = Math.floor(Math.random() * 12) + 8;
-                playerHP = Math.min(100, playerHP + heal);
-                log.innerText = `Zonko zips up defenses and recovers ${heal} HP.`;
+                let d = Math.floor(Math.random()*15)+10; enemyHP -= d; log.innerText = `You dealt ${d} structure damage to security lines!`;
+            } else {
+                let h = Math.floor(Math.random()*12)+8; playerHP = Math.min(100, playerHP + h); log.innerText = `Defensive loops active. Recompiled ${h} shield points.`;
             }
-
-            // Update UI health views
             updateBars();
-
-            // Check if enemy survives to retaliate
             if(enemyHP <= 0) {
-                enemyHP = 0;
-                updateBars();
-                log.innerText = "Victory! The Firewall Bot was completely bypassed!";
-                log.style.color = "var(--primary-green)";
-                endBattle();
-                return;
+                enemyHP = 0; updateBars(); log.innerText = "Core node secured successfully! Victory."; log.style.color = "var(--primary-green)"; endBattle(); return;
             }
-
-            // Enemy counter turn
             setTimeout(() => {
-                let enemyDmg = Math.floor(Math.random() * 12) + 6;
-                playerHP -= enemyDmg;
-                if(playerHP < 0) playerHP = 0;
-                updateBars();
-                
-                if(playerHP <= 0) {
-                    log.innerText = "Defeat! Mainframe security captured your avatar.";
-                    log.style.color = "var(--danger-red)";
-                    endBattle();
-                } else {
-                    if(enemyHP > 0) log.style.color = "var(--text-muted)";
-                }
-            }, 600);
+                let ed = Math.floor(Math.random()*12)+6; playerHP -= ed; if(playerHP < 0) playerHP = 0; updateBars();
+                if(playerHP <= 0) { log.innerText = "Fatal Error! Connection severed by defensive terminal."; log.style.color = "var(--danger-red)"; endBattle(); }
+            }, 500);
         }
-
         function updateBars() {
             document.getElementById('p-hp').style.width = playerHP + '%';
             document.getElementById('e-hp').style.width = enemyHP + '%';
         }
-
         function endBattle() {
             document.getElementById('battle-actions').style.display = 'none';
             document.getElementById('reset-b-btn').style.display = 'inline-block';
         }
-
         function resetBattle() {
-            playerHP = 100;
-            enemyHP = 100;
-            updateBars();
-            document.getElementById('battle-log').innerText = "Your turn! Choose an action.";
-            document.getElementById('battle-log').style.color = "var(--text-muted)";
-            document.getElementById('battle-actions').style.display = 'flex';
-            document.getElementById('reset-b-btn').style.display = 'none';
+            playerHP = 100; enemyHP = 100; updateBars();
+            const log = document.getElementById('battle-log');
+            if(log) { log.innerText = "Awaiting tactical designation initialization..."; log.style.color = "var(--text-muted)"; }
+            if(document.getElementById('battle-actions')) document.getElementById('battle-actions').style.display = 'block';
+            if(document.getElementById('reset-b-btn')) document.getElementById('reset-b-btn').style.display = 'none';
         }
     </script>
 </body>
 </html>
-            
