@@ -400,7 +400,7 @@
                 document.getElementById('meta-game-desc').innerText = "Control both elements or team up with a friend to solve intricate platforming puzzles in this legendary web arcade installment.";
                 document.getElementById('game-mini-title').innerText = "PLAYING: FIREBOY & WATERGIRL 7";
                 
-                // Added sandbox restrictions to keep the game locked securely on your site
+                // Uses allow attribute strings instead of strict sandboxes to avoid server-side load crashes
                 windowFrame.innerHTML = `
                     <iframe 
                         src="https://html5.gamedistribution.com/d4a3629101574bc39bd8f9d1888ca58e/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}" 
@@ -409,7 +409,7 @@
                         scrolling="none" 
                         frameborder="0"
                         allowfullscreen="true"
-                        sandbox="allow-scripts allow-same-origin">
+                        allow="autoplay; gamepad; fullscreen">
                     </iframe>`;
             }
             theater.scrollIntoView({ behavior: 'smooth' });
