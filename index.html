@@ -255,8 +255,8 @@
         .play-overlay span { background: var(--primary-green); color: #000; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;}
 
         .card-info { padding: 20px; flex-grow: 1; }
-        .card-tag { background-color: rgba(57, 255, 20, 0.1); color: var(--primary-green); padding: 4px 8px; font-size: 0.8rem; font-weight: 700; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
         .card-info h3 { margin-bottom: 10px; }
+        .card-tag { background-color: rgba(57, 255, 20, 0.1); color: var(--primary-green); padding: 4px 8px; font-size: 0.8rem; font-weight: 700; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
         .card-info p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.4; }
 
         /* Custom Mini Games CSS Hooks */
@@ -345,6 +345,15 @@
                     <p>Work together to navigate temples, flip switches, and collect elemental gems.</p>
                 </div>
             </div>
+
+            <div class="card" onclick="loadGame('stickman')">
+                <div class="card-thumb" style="background: linear-gradient(135deg, #2d3748, #1a202c);">🏃‍♂️<div class="play-overlay"><span>Launch Game</span></div></div>
+                <div class="card-info">
+                    <span class="card-tag">Action / Platformer</span>
+                    <h3>Stickman Adventure</h3>
+                    <p>Run, jump, and navigate through obstacles in this classic stickman platformer challenge.</p>
+                </div>
+            </div>
         </div>
 
         <h2 class="section-title" id="anime-section">Streaming Anime Channels</h2>
@@ -400,10 +409,28 @@
                 document.getElementById('meta-game-desc').innerText = "Control both elements or team up with a friend to solve intricate platforming puzzles in this legendary web arcade installment.";
                 document.getElementById('game-mini-title').innerText = "PLAYING: FIREBOY & WATERGIRL 7";
                 
-                // Uses allow attribute strings instead of strict sandboxes to avoid server-side load crashes
                 windowFrame.innerHTML = `
                     <iframe 
                         src="https://html5.gamedistribution.com/d4a3629101574bc39bd8f9d1888ca58e/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}" 
+                        width="100%" 
+                        height="100%" 
+                        scrolling="none" 
+                        frameborder="0"
+                        allowfullscreen="true"
+                        allow="autoplay; gamepad; fullscreen">
+                    </iframe>`;
+            }
+            // NEWLY ADDED STICKMAN ADVENTURE LOGIC
+            else if (gameKey === 'stickman') {
+                document.getElementById('meta-game-title').innerText = "Stickman Adventure";
+                document.getElementById('meta-game-genre').innerText = "Action / Platformer";
+                document.getElementById('meta-game-desc').innerText = "Take control of your stickman, run through tough physics-based obstacles, and complete the adventure levels.";
+                document.getElementById('game-mini-title').innerText = "PLAYING: STICKMAN ADVENTURE";
+                
+                // Embedded with responsive 100% dimensions to fit perfectly inside your portal layout
+                windowFrame.innerHTML = `
+                    <iframe 
+                        src="https://html5.gamedistribution.com/fd5ae555f42e4dac872819ed9125616c/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}" 
                         width="100%" 
                         height="100%" 
                         scrolling="none" 
