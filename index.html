@@ -111,12 +111,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 40px 5%;
-            min-height: 40vh;
+            min-height: 30vh;
             background: radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
-        }
-
-        .hero-content {
-            max-width: 550px;
         }
 
         .hero-content h1 {
@@ -135,34 +131,14 @@
             margin-bottom: 20px;
         }
 
-        .btn {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--primary-green), var(--accent-green));
-            color: #000;
-            font-weight: 700;
-            padding: 12px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            text-transform: uppercase;
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
-        }
-
-        /* --- NEW: CRAZYGAMES THEATER VIEW CONTAINER --- */
-        .arcade-theater {
+        /* --- THEATER PANELS --- */
+        .view-theater {
             max-width: 900px;
             margin: 20px auto 50px auto;
             padding: 0 20px;
-            display: none; /* Hidden by default until a game is selected */
+            display: none; /* Hidden until activated */
         }
 
-        /* The Box representing the actual running game screen */
         .theater-screen-wrapper {
             background-color: #050806;
             border: 3px solid var(--primary-green);
@@ -174,25 +150,15 @@
             justify-content: center;
             align-items: center;
             box-shadow: 0 0 30px rgba(57, 255, 20, 0.15);
+            overflow: hidden;
         }
 
-        /* Fullscreen Support Target */
-        .theater-screen-wrapper:fullscreen {
-            height: 100vh;
-            width: 100vw;
-            border: none;
-            border-radius: 0;
-        }
-
-        .theater-iframe-container {
+        .theater-screen-wrapper video {
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            object-fit: cover;
         }
 
-        /* Control Bar below game window */
         .theater-controls {
             background-color: var(--bg-card);
             padding: 15px 20px;
@@ -212,9 +178,6 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .fullscreen-btn:hover {
@@ -222,8 +185,7 @@
             color: #000;
         }
 
-        /* CrazyGames Style Metadata Box Below Game */
-        .game-meta-box {
+        .meta-box {
             background-color: var(--bg-card);
             margin-top: 15px;
             padding: 25px;
@@ -231,31 +193,7 @@
             border: 1px solid #1f2e26;
         }
 
-        .meta-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .rating-stars {
-            color: #ffd700; /* Gold Stars */
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .rating-value {
-            color: var(--text-main);
-            font-weight: bold;
-            background: rgba(255, 215, 0, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        /* --- Content Grids --- */
+        /* --- Grid Setup --- */
         .main-container {
             padding: 40px 5%;
         }
@@ -275,14 +213,13 @@
             margin-bottom: 60px;
         }
 
-        /* Clickable Thumbnail Cards */
         .card {
             background-color: var(--bg-card);
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #1f2e26;
             cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
         }
@@ -290,7 +227,6 @@
         .card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-green);
-            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.1);
         }
 
         .card-thumb {
@@ -298,15 +234,13 @@
             height: 180px;
             background-color: #050806;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-size: 3rem;
-            border-bottom: 1px solid #1f2e26;
             position: relative;
         }
 
-        .play-hover-overlay {
+        .play-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(57, 255, 20, 0.15);
@@ -317,61 +251,20 @@
             transition: opacity 0.2s ease;
         }
 
-        .card:hover .play-hover-overlay {
-            opacity: 1;
-        }
+        .card:hover .play-overlay { opacity: 1; }
+        .play-overlay span { background: var(--primary-green); color: #000; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem;}
 
-        .play-hover-overlay span {
-            background: var(--primary-green);
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
+        .card-info { padding: 20px; flex-grow: 1; }
+        .card-tag { background-color: rgba(57, 255, 20, 0.1); color: var(--primary-green); padding: 4px 8px; font-size: 0.8rem; font-weight: 700; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+        .card-info h3 { margin-bottom: 10px; }
+        .card-info p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.4; }
 
-        .card-info {
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .card-tag {
-            background-color: rgba(57, 255, 20, 0.1);
-            color: var(--primary-green);
-            padding: 4px 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
-        .card-info h3 {
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .card-info p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        /* --- Game Internal Engines Styling (Loaded inside main view) --- */
+        /* Custom Mini Games CSS Hooks */
         canvas { background-color: #080d0a; display: block; }
-        .inner-game-element { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .time-rift { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--accent-green), transparent); box-shadow: 0 0 25px var(--primary-green); cursor: pointer; animation: pulse 1s infinite alternate; }
-        @keyframes pulse { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
-        .frozen { background: radial-gradient(circle, #00ffff, transparent) !important; box-shadow: 0 0 25px #00ffff !important; }
-        .battle-screen { display: flex; justify-content: space-around; width: 80%; margin-bottom: 20px; }
-        .hud-bar { width: 120px; height: 10px; background-color: #333; border-radius: 5px; margin-top: 5px; }
-        .hud-fill { height: 100%; background-color: var(--primary-green); width: 100%; transition: width 0.3s ease; }
-        .mini-btn { background-color: #1a2620; color: var(--primary-green); border: 1px solid var(--primary-green); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 5px; }
+        .mini-btn { background-color: #1a2620; color: var(--primary-green); border: 1px solid var(--primary-green); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; margin: 5px; }
         .mini-btn:hover { background-color: var(--primary-green); color: #000; }
 
-        footer { background-color: #060a08; padding: 40px 5%; text-align: center; border-top: 1px solid #1f2e26; color: var(--text-muted); margin-top: 40px;}
-        footer p span { color: var(--primary-green); }
+        footer { background-color: #060a08; padding: 30px; text-align: center; border-top: 1px solid #1f2e26; color: var(--text-muted); margin-top: 40px; }
     </style>
 </head>
 <body>
@@ -383,345 +276,184 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Home</a></li>
                 <li><a href="#games-section">Arcade</a></li>
-                <li><a href="#anime-section">Anime</a></li>
+                <li><a href="#anime-section">Anime Hub</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="hero" id="home-hero">
+    <section class="hero">
         <div class="hero-content">
-            <h1>Zonko <span>Arcade</span> Platform</h1>
-            <p>Click any game below to open the custom play dashboard directly on this page—complete with dynamic ratings and absolute fullscreen mode support.</p>
-            <a href="#games-section" class="btn">Browse Game Grid</a>
+            <h1>Zonko <span>Media Portal</span></h1>
+            <p>Launch prebuilt co-op challenges or switch directly over to streaming anime channels seamlessly.</p>
         </div>
-        <div style="font-size: 6rem;">🦝💚</div>
+        <div style="font-size: 5rem;">🦝💚</div>
     </section>
 
-    <section class="arcade-theater" id="game-theater-section">
-        <div class="theater-screen-wrapper" id="fullscreen-target">
-            <div class="theater-iframe-container" id="active-game-window"></div>
+    <section class="view-theater" id="game-theater-section">
+        <div class="theater-screen-wrapper" id="game-fullscreen-target">
+            <div id="active-game-window" style="width:100%; height:100%;"></div>
         </div>
-        
         <div class="theater-controls">
-            <div style="font-weight: bold; color: var(--primary-green);" id="theater-mini-title">GAME ACTIVE</div>
-            <button class="fullscreen-btn" onclick="goFullScreen()">
-                📺 Go Full Screen
-            </button>
+            <div style="font-weight: bold; color: var(--primary-green);" id="game-mini-title">ARCADE LIVE</div>
+            <button class="fullscreen-btn" onclick="goFullScreen('game-fullscreen-target')">📺 Fullscreen</button>
         </div>
+        <div class="meta-box">
+            <h2 id="meta-game-title" style="margin-bottom: 5px;">Game Title</h2>
+            <span class="card-tag" id="meta-game-genre">Genre</span>
+            <p id="meta-game-desc" style="color: var(--text-muted); margin-top: 10px; line-height: 1.5;"></p>
+        </div>
+    </section>
 
-        <div class="game-meta-box">
-            <div class="meta-header">
-                <div>
-                    <h2 id="meta-game-title" style="font-size: 1.8rem; margin-bottom: 5px;">Game Title</h2>
-                    <span class="card-tag" id="meta-game-genre">Genre</span>
-                </div>
-                <div class="rating-stars">
-                    <span>★ ★ ★ ★ ☆</span>
-                    <span class="rating-value" id="meta-game-rating">4.7</span>
-                </div>
-            </div>
-            <hr style="border: 0; border-top: 1px solid #1f2e26; margin: 15px 0;">
-            <p id="meta-game-desc" style="color: var(--text-muted); line-height: 1.6;">Game description details will parse dynamically inside this container viewport.</p>
+    <section class="view-theater" id="anime-theater-section">
+        <div class="theater-screen-wrapper" id="anime-fullscreen-target">
+            <video id="active-video-player" controls autoplay>
+                <source id="video-source-hook" src="" type="video/mp4">
+                Your browser does not support high-definition video playback elements.
+            </video>
+        </div>
+        <div class="theater-controls">
+            <div style="font-weight: bold; color: var(--accent-green);" id="anime-mini-title">STREAM CHANNEL ACTIVE</div>
+            <button class="fullscreen-btn" onclick="goFullScreen('anime-fullscreen-target')">🎬 Cinematic mode</button>
+        </div>
+        <div class="meta-box">
+            <h2 id="meta-anime-title" style="margin-bottom: 5px;">Anime Title</h2>
+            <span class="card-tag" id="meta-anime-genre">Genre</span>
+            <p id="meta-anime-desc" style="color: var(--text-muted); margin-top: 10px; line-height: 1.5;"></p>
         </div>
     </section>
 
     <main class="main-container">
-        <h2 class="section-title" id="games-section">Select a Game to Play</h2>
         
+        <h2 class="section-title" id="games-section">Interactive Games</h2>
         <div class="grid">
             <div class="card" onclick="loadGame('quest')">
-                <div class="card-thumb">
-                    🦝
-                    <div class="play-hover-overlay"><span>Launch Game</span></div>
-                </div>
+                <div class="card-thumb">🦝<div class="play-overlay"><span>Launch Match</span></div></div>
                 <div class="card-info">
                     <span class="card-tag">Arcade</span>
                     <h3>Cyber Raccoon Quest</h3>
-                    <p>Dodge hazardous system firewalls and collect pure neon data modules.</p>
+                    <p>Slide past security networks to grab neon data modules.</p>
                 </div>
             </div>
-
-            <div class="card" onclick="loadGame('chrono')">
-                <div class="card-thumb">
-                    🌀
-                    <div class="play-hover-overlay"><span>Launch Game</span></div>
-                </div>
+            
+            <div class="card" onclick="loadGame('fireboy')">
+                <div class="card-thumb" style="background: linear-gradient(135deg, #ff4500, #1e90ff);">🔥💧<div class="play-overlay"><span>Launch Game</span></div></div>
                 <div class="card-info">
-                    <span class="card-tag">Reflex / Clicker</span>
-                    <h3>Chrono Bound</h3>
-                    <p>Manipulate space-time rifts. Freeze your surroundings to stabilize energy flow.</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="loadGame('tactics')">
-                <div class="card-thumb">
-                    ⚔️
-                    <div class="play-hover-overlay"><span>Launch Game</span></div>
-                </div>
-                <div class="card-info">
-                    <span class="card-tag">Turn-Based</span>
-                    <h3>Hoodie Squad Tactics</h3>
-                    <p>Engage mainframe bots in structural combat using high-tech skills.</p>
+                    <span class="card-tag">Co-op / Puzzle</span>
+                    <h3>Fireboy and Watergirl 7</h3>
+                    <p>Work together to navigate temples, flip switches, and collect elemental gems.</p>
                 </div>
             </div>
         </div>
 
-        <h2 class="section-title" id="anime-section">Hot Anime Streams</h2>
+        <h2 class="section-title" id="anime-section">Streaming Anime Channels</h2>
         <div class="grid">
-            <div class="card" style="cursor: default;">
-                <div class="card-thumb" style="font-size: 1.5rem; color: var(--text-muted);">🎬 NO DATA</div>
+            <div class="card" onclick="loadAnime('neon')">
+                <div class="card-thumb" style="background-color: #16241c;">⚡<div class="play-overlay"><span>Stream Episode</span></div></div>
                 <div class="card-info">
-                    <span class="card-tag">Sci-Fi</span>
+                    <span class="card-tag">Sci-Fi / Action</span>
                     <h3>Neon Chronicles: Season 2</h3>
-                    <p>The system grid undergoes a forced reboot. The team has 24 hours to code a workaround.</p>
+                    <p>The matrix structural grid undergoes forced deletion. Can the crew inject a patch?</p>
                 </div>
             </div>
-            <div class="card" style="cursor: default;">
-                <div class="card-thumb" style="font-size: 1.5rem; color: var(--text-muted);">🎬 NO DATA</div>
+            <div class="card" onclick="loadAnime('trash')">
+                <div class="card-thumb" style="background-color: #242216;">🍃<div class="play-overlay"><span>Stream Episode</span></div></div>
                 <div class="card-info">
-                    <span class="card-tag">Fantasy</span>
+                    <span class="card-tag">Fantasy / Comedy</span>
                     <h3>Is It Wrong to Loot Trash?</h3>
-                    <p>A comedy about a clever trash-looting beast-kin who accidentally inherits an entire kingdom.</p>
+                    <p>Follow a brilliant trash-scavenging raccoon beast-kin constructing mechanical kingdoms.</p>
                 </div>
             </div>
         </div>
+
     </main>
 
     <footer>
-        <p>&copy; 2026 <span>Zonko Hub</span>. Stay green, stay wild. 🦝</p>
+        <p>&copy; 2026 <span>Zonko Hub</span>. Optimized with Wizards Code. 🦝</p>
     </footer>
 
     <script>
-        // Game Loading Framework Switcher
+        let game1Interval, itemInterval, score1=0, game1Running=false, playerObj, gameObjects;
+
         function loadGame(gameKey) {
+            document.getElementById('anime-theater-section').style.display = 'none';
+            document.getElementById('active-video-player').pause(); 
+            
             const theater = document.getElementById('game-theater-section');
             const windowFrame = document.getElementById('active-game-window');
-            
-            // Meta Elements
-            const title = document.getElementById('meta-game-title');
-            const miniTitle = document.getElementById('theater-mini-title');
-            const genre = document.getElementById('meta-game-genre');
-            const rating = document.getElementById('meta-game-rating');
-            const desc = document.getElementById('meta-game-desc');
-
-            // Make the Theater layout visible
             theater.style.display = 'block';
+            
+            clearInterval(game1Interval); clearInterval(itemInterval);
 
-            // Clear any previously running game script engines completely
-            clearInterval(game1Interval);
-            clearInterval(itemInterval);
-
-            // Populate unique Game UI, Scripts, and Layouts depending on clicked card
             if (gameKey === 'quest') {
-                title.innerText = "Cyber Raccoon Quest";
-                miniTitle.innerText = "PLAYING: CYBER RACCOON QUEST";
-                genre.innerText = "Arcade Action";
-                rating.innerText = "4.9 / 5";
-                desc.innerText = "Controls: Use Left and Right Arrow keys on your keyboard to slide Zonko across the memory channel. Collect green logs while avoiding the descending firewall blocks.";
-                
-                windowFrame.innerHTML = `
-                    <div style="position: absolute; top: 15px; left: 15px; font-weight: bold; font-size:1.2rem; color: var(--primary-green);">Score: <span id="g1-score">0</span></div>
-                    <canvas id="canvasQuest" width="600" height="400"></canvas>
-                    <div id="g1-overlay" style="position:absolute; background:rgba(0,0,0,0.85); width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                        <h2 style="color:var(--primary-green); margin-bottom:10px;">READY PLAYER ONE</h2>
-                        <button class="mini-btn" onclick="startGame1()">Start Match</button>
-                    </div>
-                `;
+                document.getElementById('meta-game-title').innerText = "Cyber Raccoon Quest";
+                document.getElementById('meta-game-genre').innerText = "Arcade";
+                document.getElementById('meta-game-desc').innerText = "Keys: Use Left / Right arrows to move your raccoon cube. Snag bright green grids!";
+                document.getElementById('game-mini-title').innerText = "PLAYING: CYBER RACCOON QUEST";
+                windowFrame.innerHTML = `<div style="position:absolute;top:10px;left:10px;font-weight:bold;">Score: <span id="g1-score">0</span></div><canvas id="canvasQuest" width="600" height="400"></canvas><div id="g1-overlay" style="position:absolute;background:rgba(0,0,0,0.8);width:100%;height:100%;display:flex;justify-content:center;align-items:center;"><button class="mini-btn" onclick="startGame1()">Boot Match</button></div>`;
                 initQuestEngine();
             } 
-            else if (gameKey === 'chrono') {
-                title.innerText = "Chrono Bound";
-                miniTitle.innerText = "PLAYING: CHRONO BOUND";
-                genre.innerText = "Reflex Clicker";
-                rating.innerText = "4.6 / 5";
-                desc.innerText = "Click the anomaly rift directly to build data metrics. Keep an eye out—toggling Freeze Time cools down system instability to allow safe extra extractions.";
+            else if (gameKey === 'fireboy') {
+                // Inserted your exact game frame embed link here!
+                document.getElementById('meta-game-title').innerText = "Fireboy and Watergirl 7";
+                document.getElementById('meta-game-genre').innerText = "Co-op Puzzle";
+                document.getElementById('meta-game-desc').innerText = "Control both elements or team up with a friend to solve intricate platforming puzzles in this legendary web arcade installment.";
+                document.getElementById('game-mini-title').innerText = "PLAYING: FIREBOY & WATERGIRL 7";
                 
                 windowFrame.innerHTML = `
-                    <div class="inner-game-element">
-                        <div style="font-size: 1.2rem; margin-bottom: 10px;">Time Fractures: <span id="g2-score" style="color:var(--primary-green); font-weight:bold;">0</span></div>
-                        <div id="g2-status" style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Status: Run-Time Normal</div>
-                        <div class="time-rift" id="rift-target" onclick="clickRift()"></div>
-                        <button class="mini-btn" id="g2-freeze-btn" onclick="toggleTime()" style="margin-top: 30px;">Freeze Reality Framework</button>
-                    </div>
-                `;
-            } 
-            else if (gameKey === 'tactics') {
-                title.innerText = "Hoodie Squad Tactics";
-                miniTitle.innerText = "PLAYING: HOODIE SQUAD TACTICS";
-                genre.innerText = "Turn-Based Strategy";
-                rating.innerText = "4.8 / 5";
-                desc.innerText = "A miniature tactical system environment. Select your approach structure carefully. Use Defend to reduce damage incoming from active system bot defenses.";
-                
-                windowFrame.innerHTML = `
-                    <div class="inner-game-element" style="padding: 20px;">
-                        <div class="battle-screen">
-                            <div style="text-align: center;"><h3>🦝 Player Unit</h3><div class="hud-bar"><div class="hud-fill" id="p-hp"></div></div></div>
-                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--danger-red); align-self:center;">VS</div>
-                            <div style="text-align: center;"><h3>🤖 Security Bot</h3><div class="hud-bar"><div class="hud-fill" id="e-hp" style="background-color: var(--danger-red);"></div></div></div>
-                        </div>
-                        <p id="battle-log" style="margin: 20px 0; color: var(--text-muted); font-size:1.1rem;">Awaiting tactical designation initialization...</p>
-                        <div id="battle-actions">
-                            <button class="mini-btn" onclick="playTurn('attack')">Execute Slash</button>
-                            <button class="mini-btn" onclick="playTurn('heal')">Defend Network</button>
-                        </div>
-                        <button class="mini-btn" id="reset-b-btn" onclick="resetBattle()" style="display:none;">Reinitialize Environment</button>
-                    </div>
-                `;
-                resetBattle();
+                    <iframe 
+                        src="https://html5.gamedistribution.com/d4a3629101574bc39bd8f9d1888ca58e/?gd_sdk_referrer_url=https://www.example.com/games/{game-path}" 
+                        width="100%" 
+                        height="100%" 
+                        scrolling="none" 
+                        frameborder="0"
+                        allowfullscreen="true">
+                    </iframe>`;
             }
-
-            // Automatically focus screen focus directly to the viewport game frame smoothly
             theater.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Full Screen Handler Function
-        function goFullScreen() {
-            const element = document.getElementById('fullscreen-target');
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.webkitRequestFullscreen) { /* Safari */
-                element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) { /* IE11 */
-                element.msRequestFullscreen();
+        function loadAnime(animeKey) {
+            document.getElementById('game-theater-section').style.display = 'none';
+            clearInterval(game1Interval); clearInterval(itemInterval);
+
+            const animeTheater = document.getElementById('anime-theater-section');
+            const player = document.getElementById('active-video-player');
+            const source = document.getElementById('video-source-hook');
+
+            animeTheater.style.display = 'block';
+
+            if(animeKey === 'neon') {
+                document.getElementById('meta-anime-title').innerText = "Neon Chronicles: Season 2 (Episode 1)";
+                document.getElementById('meta-anime-genre').innerText = "Cyberpunk Action";
+                document.getElementById('meta-anime-desc').innerText = "System firewalls lock down District 9. Zonko's tech crew attempts to override structural deletion protocols.";
+                document.getElementById('anime-mini-title').innerText = "STREAMING NOW: NEON CHRONICLES S2";
+                source.src = "https://www.w3schools.com/html/mov_bbb.mp4"; 
+            } 
+            else if(animeKey === 'trash') {
+                document.getElementById('meta-anime-title').innerText = "Is It Wrong to Loot Trash? (Pilot Special)";
+                document.getElementById('meta-anime-genre').innerText = "Fantasy / Comedy";
+                document.getElementById('meta-anime-desc').innerText = "Banished to the outskirts of scrap city, a highly strategic raccoon discovers a legendary power core inside a pile of junk.";
+                document.getElementById('anime-mini-title').innerText = "STREAMING NOW: IS IT WRONG TO LOOT TRASH?";
+                source.src = "https://www.w3schools.com/html/movie.mp4"; 
             }
+
+            player.load();
+            player.play();
+            animeTheater.scrollIntoView({ behavior: 'smooth' });
         }
 
-        /* ========================================================
-           ENGINE CODE 1: CYBER QUEST CANVASSING
-           ======================================================== */
-        let game1Interval, itemInterval;
-        let score1 = 0, game1Running = false;
-        let player, gameObjects;
-
-        function initQuestEngine() {
-            player = { x: 280, y: 350, width: 40, height: 40, speed: 25 };
-            gameObjects = [];
-            
-            // Clean global hooks to map keys correctly inside parent layout
-            window.removeEventListener('keydown', handleQuestInput);
-            window.addEventListener('keydown', handleQuestInput);
+        function goFullScreen(targetId) {
+            const element = document.getElementById(targetId);
+            if (element.requestFullscreen) element.requestFullscreen();
+            else if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
         }
 
-        function handleQuestInput(e) {
-            const c = document.getElementById('canvasQuest');
-            if(!game1Running || !c) return;
-            if(e.key === 'ArrowLeft' && player.x > 0) player.x -= player.speed;
-            if(e.key === 'ArrowRight' && player.x < c.width - player.width) player.x += player.speed;
-        }
-
-        function startGame1() {
-            const c = document.getElementById('canvasQuest');
-            if(!c) return;
-            document.getElementById('g1-overlay').style.display = 'none';
-            score1 = 0;
-            document.getElementById('g1-score').innerText = score1;
-            gameObjects = [];
-            player.x = 280;
-            game1Running = true;
-
-            itemInterval = setInterval(() => {
-                let isGood = Math.random() > 0.4;
-                gameObjects.push({
-                    x: Math.random() * (c.width - 20),
-                    y: -20, size: 20, speed: 4 + Math.random() * 5, type: isGood ? 'data' : 'bug'
-                });
-            }, 600);
-
-            game1Interval = setInterval(updateQuestFrame, 1000/30);
-        }
-
-        function updateQuestFrame() {
-            const c = document.getElementById('canvasQuest');
-            if(!c) return;
-            const ctx = c.getContext('2d');
-            ctx.clearRect(0, 0, c.width, c.height);
-
-            // Render Character Layout
-            ctx.fillStyle = '#666'; ctx.fillRect(player.x, player.y, player.width, player.height);
-            ctx.fillStyle = '#39ff14'; ctx.fillRect(player.x, player.y + 15, player.width, player.height - 15);
-
-            for (let i = gameObjects.length - 1; i >= 0; i--) {
-                let o = gameObjects[i]; o.y += o.speed;
-                ctx.fillStyle = o.type === 'data' ? '#39ff14' : '#ff3333';
-                ctx.fillRect(o.x, o.y, o.size, o.size);
-
-                if (o.y + o.size >= player.y && o.x + o.size >= player.x && o.x <= player.x + player.width && o.y <= player.y + player.height) {
-                    if (o.type === 'data') {
-                        score1 += 10; document.getElementById('g1-score').innerText = score1;
-                    } else {
-                        game1Running = false; clearInterval(game1Interval); clearInterval(itemInterval);
-                        document.getElementById('g1-overlay').style.display = 'flex';
-                        document.getElementById('g1-overlay').innerHTML = `<h3 style="color:var(--danger-red);">MAINBOARD CRASHED</h3><p style="margin:5px 0;">Final Log Units: ${score1}</p><button class="mini-btn" onclick="startGame1()">Retry Run</button>`;
-                    }
-                    gameObjects.splice(i, 1); continue;
-                }
-                if (o.y > c.height) gameObjects.splice(i, 1);
-            }
-        }
-
-        /* ========================================================
-           ENGINE CODE 2: CHRONO BOUND MANAGEMENT
-           ======================================================== */
-        let score2 = 0, isTimeFrozen = false;
-        function clickRift() {
-            score2 += isTimeFrozen ? 1 : 5;
-            document.getElementById('g2-score').innerText = score2;
-            if(!isTimeFrozen) {
-                const rift = document.getElementById('rift-target');
-                rift.style.transform = `translate(${Math.floor(Math.random()*160)-80}px, ${Math.floor(Math.random()*80)-40}px)`;
-            }
-        }
-        function toggleTime() {
-            isTimeFrozen = !isTimeFrozen;
-            const rift = document.getElementById('rift-target');
-            const btn = document.getElementById('g2-freeze-btn');
-            const status = document.getElementById('g2-status');
-            if(isTimeFrozen) {
-                rift.classList.add('frozen'); rift.style.transform = "translate(0px,0px)";
-                btn.innerText = "Release Flow Restraints"; status.innerText = "Status: Static Array Safe Zone"; status.style.color = "#00ffff";
-            } else {
-                rift.classList.remove('frozen'); btn.innerText = "Freeze Reality Framework"; status.innerText = "Status: Run-Time Normal"; status.style.color = "var(--text-muted)";
-            }
-        }
-
-        /* ========================================================
-           ENGINE CODE 3: HOODIE SQUAD STRATEGY SIMULATION
-           ======================================================== */
-        let playerHP = 100, enemyHP = 100;
-        function playTurn(action) {
-            if(playerHP <= 0 || enemyHP <= 0) return;
-            let log = document.getElementById('battle-log');
-            if(action === 'attack') {
-                let d = Math.floor(Math.random()*15)+10; enemyHP -= d; log.innerText = `You dealt ${d} structure damage to security lines!`;
-            } else {
-                let h = Math.floor(Math.random()*12)+8; playerHP = Math.min(100, playerHP + h); log.innerText = `Defensive loops active. Recompiled ${h} shield points.`;
-            }
-            updateBars();
-            if(enemyHP <= 0) {
-                enemyHP = 0; updateBars(); log.innerText = "Core node secured successfully! Victory."; log.style.color = "var(--primary-green)"; endBattle(); return;
-            }
-            setTimeout(() => {
-                let ed = Math.floor(Math.random()*12)+6; playerHP -= ed; if(playerHP < 0) playerHP = 0; updateBars();
-                if(playerHP <= 0) { log.innerText = "Fatal Error! Connection severed by defensive terminal."; log.style.color = "var(--danger-red)"; endBattle(); }
-            }, 500);
-        }
-        function updateBars() {
-            document.getElementById('p-hp').style.width = playerHP + '%';
-            document.getElementById('e-hp').style.width = enemyHP + '%';
-        }
-        function endBattle() {
-            document.getElementById('battle-actions').style.display = 'none';
-            document.getElementById('reset-b-btn').style.display = 'inline-block';
-        }
-        function resetBattle() {
-            playerHP = 100; enemyHP = 100; updateBars();
-            const log = document.getElementById('battle-log');
-            if(log) { log.innerText = "Awaiting tactical designation initialization..."; log.style.color = "var(--text-muted)"; }
-            if(document.getElementById('battle-actions')) document.getElementById('battle-actions').style.display = 'block';
-            if(document.getElementById('reset-b-btn')) document.getElementById('reset-b-btn').style.display = 'none';
-        }
+        // Mini Game Engine Hooks
+        function initQuestEngine() { playerObj = { x: 280, y: 340, width: 40, height: 40, speed: 25 }; gameObjects = []; window.removeEventListener('keydown', handleInput); window.addEventListener('keydown', handleInput); }
+        function handleInput(e) { const c = document.getElementById('canvasQuest'); if(!game1Running || !c) return; if(e.key === 'ArrowLeft' && playerObj.x > 0) playerObj.x -= playerObj.speed; if(e.key === 'ArrowRight' && playerObj.x < c.width - playerObj.width) playerObj.x += playerObj.speed; }
+        function startGame1() { const c = document.getElementById('canvasQuest'); if(!c) return; document.getElementById('g1-overlay').style.display='none'; score1=0; gameObjects=[]; playerObj.x=280; game1Running=true; itemInterval=setInterval(()=>{ let g=Math.random()>0.4; gameObjects.push({x:Math.random()*(c.width-20),y:-20,size:20,speed:5,type:g?'data':'bug'});},600); game1Interval=setInterval(()=>{ const ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); ctx.fillStyle='#666'; ctx.fillRect(playerObj.x,playerObj.y,playerObj.width,playerObj.height); ctx.fillStyle='#39ff14'; ctx.fillRect(playerObj.x,playerObj.y+15,playerObj.width,playerObj.height-15); for(let i=gameObjects.length-1;i>=0;i--){ let o=gameObjects[i]; o.y+=o.speed; ctx.fillStyle=o.type==='data'?'#39ff14':'#ff3333'; ctx.fillRect(o.x,o.y,o.size,o.size); if(o.y+o.size>=playerObj.y && o.x+o.size>=playerObj.x && o.x<=playerObj.x+playerObj.width && o.y<=playerObj.y+playerObj.height){ if(o.type==='data'){ score1+=10; document.getElementById('g1-score').innerText=score1; } else { game1Running=false; clearInterval(game1Interval); clearInterval(itemInterval); document.getElementById('g1-overlay').style.display='flex'; document.getElementById('g1-overlay').innerHTML=`<p style="color:var(--danger-red);">CRASH</p><button class="mini-btn" onclick="startGame1()">Retry</button>`; } gameObjects.splice(i,1); continue; } if(o.y>c.height) gameObjects.splice(i,1); } },1000/30); }
     </script>
 </body>
 </html>
