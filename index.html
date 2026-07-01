@@ -117,12 +117,12 @@ header {
 
     <div class="card" onclick="loadGame('quest')">
         <div class="card-thumb">🦝</div>
-        <h3>Cyber Raccoon Quest</h3>
+      <h3>Cyber Raccoon Quest</h3>
     </div>
 
     <div class="card" onclick="loadGame('wbwwb')">
         <div class="card-thumb">👁️</div>
-        <h3>We Become What We Behold</h3>
+      <h3>We Become What We Behold</h3>
     </div>
 
 </div>
@@ -144,7 +144,7 @@ function loadGame(gameKey) {
         document.getElementById("meta-game-desc").innerText = "Collect neon data cubes.";
 
         windowFrame.innerHTML = "<canvas width='600' height='400'></canvas>";
-    }
+}
 
     else if (gameKey === "wbwwb") {
 
@@ -153,14 +153,12 @@ function loadGame(gameKey) {
 
         windowFrame.innerHTML = `
             <iframe
-                src="https://html-classic.itch.zone/html/300364/index.html?v=1782253839"
+                src="https://ncase.me/wbwwb/"
                 style="width:100%; height:100%; border:0;"
-                scrolling="no"
-                allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; cross-origin-isolated; web-share"
                 allowfullscreen>
             </iframe>
         `;
-    }
+}
 
     theater.scrollIntoView({ behavior: "smooth" });
 }
