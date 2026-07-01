@@ -1,150 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zonko | Games & Anime</title>
-    <style>
-        /* --- Design System & Variables --- */
-        :root {
-            --bg-dark: #0a0f0d;
-            --bg-card: #121a16;
-            --primary-green: #39ff14;
-            --accent-green: #00ff87;
-            --text-main: #ffffff;
-            --text-muted: #a0aec0;
-            --danger-red: #ff3333;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zonko | Games & Anime</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<style>
+:root {
+    --bg-dark: #0a0f0d;
+    --bg-card: #121a16;
+    --primary-green: #39ff14;
+    --accent-green: #00ff87;
+    --text-main: #ffffff;
+    --text-muted: #a0aec0;
+    --danger-red: #ff3333;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background-color: rgba(18, 26, 22, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--primary-green);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
 
-        .hero {
-            padding: 40px 5%;
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background-color: rgba(18, 26, 22, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--primary-green);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
-        .view-theater {
-            max-width: 900px;
-            margin: 20px auto 50px auto;
-            padding: 0 20px;
-            display: none;
-        }
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 5%;
+    min-height: 30vh;
+    background: radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.08) 0%, transparent 50%);
+}
 
-        .theater-screen-wrapper {
-            background-color: #050806;
-            border: 3px solid var(--primary-green);
-            border-radius: 12px;
-            position: relative;
-            width: 100%;
-            height: 480px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+.view-theater {
+    max-width: 900px;
+    margin: 20px auto 50px auto;
+    padding: 0 20px;
+    display: none;
+}
 
-        #active-game-window {
-            width: 100%;
-            height: 100%;
-        }
+.theater-screen-wrapper {
+    background-color: #050806;
+    border: 3px solid var(--primary-green);
+    border-radius: 12px;
+    position: relative;
+    width: 100%;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px 5%;
-        }
+#active-game-window {
+    width: 100%;
+    height: 100%;
+}
 
-        .card {
-            background-color: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            border: 1px solid #1f2e26;
-        }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
 
-        .card:hover {
-            border-color: var(--primary-green);
-        }
+.card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #1f2e26;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
 
-        .card-thumb {
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-        }
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-green);
+}
 
-        .card-tag {
-            color: var(--primary-green);
-        }
+.card-thumb {
+    width: 100%;
+    height: 180px;
+    background-color: #050806;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    position: relative;
+}
 
-        .fullscreen-btn {
-            background: #1a2620;
-            border: 1px solid var(--primary-green);
-            color: var(--primary-green);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+.card-info {
+    padding: 20px;
+}
 
-        footer {
-            text-align: center;
-            padding: 30px;
-        }
-    </style>
+.card-tag {
+    color: var(--primary-green);
+}
+
+footer {
+    background-color: #060a08;
+    padding: 30px;
+    text-align: center;
+    border-top: 1px solid #1f2e26;
+    color: var(--text-muted);
+}
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo-text">Zonko<span>.</span></div>
+    <div class="logo-area">
+        <div class="mascot-head">🦝</div>
+        <div class="logo-text">Zonko<span>.</span></div>
+    </div>
 </header>
 
 <section class="hero">
-    <h1>Game Hub</h1>
+    <h1>Zonko Game Hub</h1>
 </section>
 
-<!-- THEATER -->
 <section class="view-theater" id="game-theater-section">
-
     <div class="theater-screen-wrapper">
         <div id="active-game-window"></div>
     </div>
 
     <h2 id="meta-game-title"></h2>
     <p id="meta-game-desc"></p>
-
 </section>
 
-<!-- GAMES -->
 <div class="grid">
 
     <div class="card" onclick="loadGame('quest')">
@@ -161,8 +170,6 @@
 
 <script>
 
-let windowFrame = document.getElementById('active-game-window');
-
 function loadGame(gameKey) {
 
     const theater = document.getElementById('game-theater-section');
@@ -171,19 +178,14 @@ function loadGame(gameKey) {
     theater.style.display = "block";
 
     if (gameKey === "quest") {
-
         document.getElementById("meta-game-title").innerText = "Cyber Raccoon Quest";
         document.getElementById("meta-game-desc").innerText = "Collect neon data cubes.";
-
         windowFrame.innerHTML = "<canvas width='600' height='400'></canvas>";
     }
 
     else if (gameKey === "wbwwb") {
-
         document.getElementById("meta-game-title").innerText = "We Become What We Behold";
         document.getElementById("meta-game-desc").innerText = "A game about media and society.";
-
-        // FIXED VERSION (important change)
         windowFrame.innerHTML = `
             <iframe
                 src="https://ncase.itch.io/wbwwb"
