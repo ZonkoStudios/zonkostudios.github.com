@@ -144,7 +144,7 @@ function loadGame(gameKey) {
         document.getElementById("meta-game-desc").innerText = "Collect neon data cubes.";
 
         windowFrame.innerHTML = "<canvas width='600' height='400'></canvas>";
-}
+    }
 
     else if (gameKey === "wbwwb") {
 
@@ -153,12 +153,12 @@ function loadGame(gameKey) {
 
         windowFrame.innerHTML = `
             <iframe
-                src="https://ncase.me/wbwwb/"
+                src="https://ncase.itch.io/wbwwb"
                 style="width:100%; height:100%; border:0;"
                 allowfullscreen>
             </iframe>
         `;
-}
+    }
 
     theater.scrollIntoView({ behavior: "smooth" });
 }
