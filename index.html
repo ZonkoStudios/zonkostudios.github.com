@@ -1,131 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zonko | Games & Anime</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zonko | Games & Anime</title>
 
-    <style>
-        :root {
-            --bg-dark: #0a0f0d;
-            --bg-card: #121a16;
-            --primary-green: #39ff14;
-            --accent-green: #00ff87;
-            --text-main: #ffffff;
-            --text-muted: #a0aec0;
-            --danger-red: #ff3333;
-        }
+<style>
+:root {
+    --bg-dark:#0a0f0d;
+    --bg-card:#121a16;
+    --primary-green:#39ff14;
+    --text-main:#fff;
+    --text-muted:#a0aec0;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
+body {
+    background:var(--bg-dark);
+    color:var(--text-main);
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background-color: rgba(18, 26, 22, 0.8);
-            border-bottom: 2px solid var(--primary-green);
-            position: sticky;
-            top: 0;
-        }
+/* HEADER */
+header {
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    border-bottom:2px solid var(--primary-green);
+}
 
-        .logo-text span { color: var(--primary-green); }
+/* HERO */
+.hero {
+    padding:30px;
+}
 
-        .hero {
-            padding: 40px 5%;
-        }
+/* THEATER */
+.view-theater {
+    max-width:900px;
+    margin:20px auto;
+    display:none;
+}
 
-        .view-theater {
-            max-width: 900px;
-            margin: 20px auto 50px;
-            display: none;
-        }
+.theater-screen-wrapper {
+    width:100%;
+    height:480px;
+    background:#000;
+    border:3px solid var(--primary-green);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
 
-        .theater-screen-wrapper {
-            background: #050806;
-            border: 3px solid var(--primary-green);
-            height: 480px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+#active-game-window {
+    width:100%;
+    height:100%;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 40px 5%;
-        }
+/* GRID */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:30px;
+}
 
-        .card {
-            background: var(--bg-card);
-            padding: 20px;
-            cursor: pointer;
-            border: 1px solid #1f2e26;
-        }
+.card {
+    background:var(--bg-card);
+    padding:20px;
+    cursor:pointer;
+    border:1px solid #1f2e26;
+}
 
-        .card:hover {
-            border-color: var(--primary-green);
-        }
+.card:hover {
+    border-color:var(--primary-green);
+}
 
-        .card-thumb {
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
-        }
+.card-thumb {
+    height:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:2rem;
+}
 
-        .card-tag {
-            color: var(--primary-green);
-        }
-
-        .fullscreen-btn {
-            background: #1a2620;
-            border: 1px solid var(--primary-green);
-            color: var(--primary-green);
-            padding: 8px 16px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo-text">Zonko<span>.</span></div>
+    <h2>Zonko<span style="color:#39ff14;">.</span></h2>
 </header>
 
 <section class="hero">
-    <h1>Zonko Game Hub</h1>
+    <h1>Game Hub</h1>
 </section>
 
-<!-- GAME THEATER -->
+<!-- THEATER -->
 <section class="view-theater" id="game-theater-section">
+
     <div class="theater-screen-wrapper">
-        <div id="active-game-window" style="width:100%; height:100%;"></div>
+        <div id="active-game-window"></div>
     </div>
 
-    <div>
-        <h2 id="meta-game-title"></h2>
-        <p id="meta-game-desc"></p>
-    </div>
+    <h2 id="meta-game-title"></h2>
+    <p id="meta-game-desc"></p>
+
 </section>
 
 <!-- GAMES -->
@@ -143,41 +129,42 @@
 
 </div>
 
-<footer>
-    Zonko Hub
-</footer>
-
 <script>
-let windowFrame;
+
+let windowFrame = document.getElementById('active-game-window');
 
 function loadGame(gameKey) {
 
-    document.getElementById('game-theater-section').style.display = 'block';
-    windowFrame = document.getElementById('active-game-window');
+    const theater = document.getElementById('game-theater-section');
+    const windowFrame = document.getElementById('active-game-window');
 
-    if (gameKey === 'quest') {
-        document.getElementById('meta-game-title').innerText = "Cyber Raccoon Quest";
-        document.getElementById('meta-game-desc').innerText = "Collect neon data and avoid traps.";
+    theater.style.display = "block";
 
-        windowFrame.innerHTML = `<canvas width="600" height="400"></canvas>`;
+    if (gameKey === "quest") {
+
+        document.getElementById("meta-game-title").innerText = "Cyber Raccoon Quest";
+        document.getElementById("meta-game-desc").innerText = "Collect neon data cubes.";
+
+        windowFrame.innerHTML = "<canvas width='600' height='400'></canvas>";
     }
 
-    else if (gameKey === 'wbwwb') {
-        document.getElementById('meta-game-title').innerText = "We Become What We Behold";
-        document.getElementById('meta-game-desc').innerText = "A game about media and society.";
+    else if (gameKey === "wbwwb") {
+
+        document.getElementById("meta-game-title").innerText = "We Become What We Behold";
+        document.getElementById("meta-game-desc").innerText = "A game about media and society.";
 
         windowFrame.innerHTML = `
-            <iframe 
-                src="https://itch.io/embed/92115"
-                width="100%"
-                height="100%"
-                frameborder="0"
+            <iframe
+                src="https://ncase.itch.io/wbwwb"
+                style="width:100%; height:100%; border:0;"
                 allowfullscreen>
             </iframe>
         `;
     }
 
+    theater.scrollIntoView({ behavior: "smooth" });
 }
+
 </script>
 
 </body>
