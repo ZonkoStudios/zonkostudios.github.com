@@ -1,169 +1,342 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zonko | Games & Anime</title>
 
+
+
 <style>
+
 :root {
+
     --bg-dark:#0a0f0d;
+
     --bg-card:#121a16;
+
     --primary-green:#39ff14;
+
     --text-main:#fff;
+
     --text-muted:#a0aec0;
+
 }
+
+
 
 * {
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
     font-family:Arial, sans-serif;
+
 }
+
+
 
 body {
+
     background:var(--bg-dark);
+
     color:var(--text-main);
+
 }
+
+
 
 /* HEADER */
+
 header {
+
     display:flex;
+
     justify-content:space-between;
+
     padding:20px;
+
     border-bottom:2px solid var(--primary-green);
+
 }
+
+
 
 /* HERO */
+
 .hero {
+
     padding:30px;
+
 }
+
+
 
 /* THEATER */
+
 .view-theater {
+
     max-width:900px;
+
     margin:20px auto;
+
     display:none;
+
 }
+
+
 
 .theater-screen-wrapper {
+
     width:100%;
+
     height:480px;
+
     background:#000;
+
     border:3px solid var(--primary-green);
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     overflow:hidden;
+
 }
+
+
 
 #active-game-window {
+
     width:100%;
+
     height:100%;
+
 }
+
+
 
 /* GRID */
+
 .grid {
+
     display:grid;
+
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
     gap:20px;
+
     padding:30px;
+
 }
+
+
 
 .card {
+
     background:var(--bg-card);
+
     padding:20px;
+
     cursor:pointer;
+
     border:1px solid #1f2e26;
+
 }
+
+
 
 .card:hover {
+
     border-color:var(--primary-green);
+
 }
+
+
 
 .card-thumb {
+
     height:120px;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     font-size:2rem;
+
 }
 
+
+
 </style>
+
 </head>
+
+
 
 <body>
 
+
+
 <header>
+
     <h2>Zonko<span style="color:#39ff14;">.</span></h2>
+
 </header>
 
+
+
 <section class="hero">
+
     <h1>Game Hub</h1>
+
 </section>
+
+
+
+<!-- THEATER -->
 
 <section class="view-theater" id="game-theater-section">
 
+
+
     <div class="theater-screen-wrapper">
+
         <div id="active-game-window"></div>
+
     </div>
 
+
+
     <h2 id="meta-game-title"></h2>
+
     <p id="meta-game-desc"></p>
+
+
 
 </section>
 
+
+
+<!-- GAMES -->
+
 <div class="grid">
 
+
+
     <div class="card" onclick="loadGame('quest')">
+
         <div class="card-thumb">🦝</div>
-      <h3>Cyber Raccoon Quest</h3>
+
+        <h3>Cyber Raccoon Quest</h3>
+
     </div>
 
+
+
     <div class="card" onclick="loadGame('wbwwb')">
+
         <div class="card-thumb">👁️</div>
-      <h3>We Become What We Behold</h3>
+
+        <h3>We Become What We Behold</h3>
+
     </div>
+
+
 
 </div>
 
+
+
 <script>
+
+
 
 let windowFrame = document.getElementById('active-game-window');
 
+
+
 function loadGame(gameKey) {
 
+
+
     const theater = document.getElementById('game-theater-section');
+
     const windowFrame = document.getElementById('active-game-window');
+
+
 
     theater.style.display = "block";
 
+
+
     if (gameKey === "quest") {
 
+
+
         document.getElementById("meta-game-title").innerText = "Cyber Raccoon Quest";
+
         document.getElementById("meta-game-desc").innerText = "Collect neon data cubes.";
 
+
+
         windowFrame.innerHTML = "<canvas width='600' height='400'></canvas>";
+
     }
+
+
 
     else if (gameKey === "wbwwb") {
 
+
+
         document.getElementById("meta-game-title").innerText = "We Become What We Behold";
+
         document.getElementById("meta-game-desc").innerText = "A game about media and society.";
 
+
+
         windowFrame.innerHTML = `
+
             <iframe
+
                 src="https://ncase.itch.io/wbwwb"
+
                 style="width:100%; height:100%; border:0;"
+
                 allowfullscreen>
+
             </iframe>
+
         `;
+
     }
 
+
+
     theater.scrollIntoView({ behavior: "smooth" });
+
 }
+
+
 
 </script>
 
+
+
 </body>
-</html>
+
+</html> 
+
